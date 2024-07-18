@@ -4,7 +4,6 @@
 
 ## Development preparation:
 1. Run ```npm install``` for the dependency packages
-2. run ```npm run prepare``` to install the husky hooks and formatters
 3. Follow the branching and naming strategies specified in the coding guidelines 
 
 ### Link to install of MongoDB
