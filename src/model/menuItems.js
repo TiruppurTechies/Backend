@@ -7,5 +7,5 @@ const menuItemSchema = new mongoose.Schema({
     veg: { type: Boolean, required: true },
 });
 
-const MenuItem = mongoose.model('MenuItem', menuItemSchema)
-module.exports = MenuItem
+const MenuItems = mongoose.model('MenuItem', menuItemSchema)
+module.exports = MenuItems
