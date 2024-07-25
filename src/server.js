@@ -5,10 +5,16 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const config = require('./config/mongoose')
 const path = require('path');
+const menuItems = require('./routes/menuItems')
+const cors = require('cors');
+
+
 
 
 dotenv.config()
 const app = express()
+
+app.use(cors());
 
 // Configure mongoose connection pool settings
 const mongooseOptions = {
@@ -19,11 +25,6 @@ const mongooseOptions = {
     socketTimeoutMS: 45000, // Socket timeout
     // TBD: ssl options for security
 }
-
-
-const hostname = process.env.HOST || 'localhost'
-const port = process.env.PORT || 5000
-
 
 mongoose.connect(config.mongoDbUri,mongooseOptions)
 const db = mongoose.connection
@@ -39,9 +40,10 @@ db.once('open', () => {
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve static files from the 'images' directory
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/menuItems',menuItems)
 
 
 app.get('/', (req, res) => {
@@ -49,8 +51,8 @@ app.get('/', (req, res) => {
 })
 
 
-app.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`)
+app.listen(config.port, config.hostname, () => {
+    console.log(`Server running at http://${config.hostname}:${config.port}`)
 })
 
 app.use(express.json())

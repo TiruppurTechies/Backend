@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const MenuItem = require('../model/seed');  // Assuming 'seed' is your model file
+const MenuItem = require('../model/menuItems');  
 const menuItemsSeedData = require('../seeds/menuItemsSeedData');
 const {connectToMongoDB} = require('../model/utils/customIdGenerator')
 
 // Connect to MongoDB
-connectToMongoDB() // Ensure connection to MongoDB
+connectToMongoDB()
 
 // Seed the database
 const seedDatabase = async () => {
