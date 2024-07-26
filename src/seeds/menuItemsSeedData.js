@@ -66,7 +66,7 @@ const menuItemsSeedData = [
     {
         foodName: "Butter Chicken",
         price: "160",
-        image: "/images/butter_chicken.jpeg",
+        image: "/images/butter_chicken.jpg",
         veg: false,
         special:true
     },
@@ -87,7 +87,7 @@ const menuItemsSeedData = [
     {
         foodName: "Chicken Tikka",
         price: "140",
-        image: "/images/chicken_tikka.jpeg",
+        image: "/images/chicken_tikka.jpg",
         veg: false,
         special:true
     }
