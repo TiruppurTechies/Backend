@@ -16,7 +16,44 @@ const  getAllMenuItems = async(req,res)=>{
             message:error.message
         })
     }
-
 }
 
-module.exports={getAllMenuItems}
+const  getVegMenuItems = async(req,res)=>{
+    try{
+
+        const vegMenuItems = await MenuItems.find({veg:true})
+        res.status(STATUS_CODES.OK).json({
+            message:"VegMenuItems found successfully",
+            vegMenuItems
+        })
+    }
+    catch(error)
+    {
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+            message:error.message
+        })
+    }
+}
+
+const  getNonVegMenuItems = async(req,res)=>{
+    try{
+
+        const nonVegMenuItems = await MenuItems.find({veg:false})
+        res.status(STATUS_CODES.OK).json({
+            message:"NonMenuItems found successfully",
+            nonVegMenuItems
+        })
+    }
+    catch(error)
+    {
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+            message:error.message
+        })
+    }
+}
+
+
+module.exports={
+    getAllMenuItems,
+    getVegMenuItems,
+    getNonVegMenuItems}
