@@ -59,7 +59,7 @@ const menuItemsSeedData = [
     {
         foodName: "Veg Pulao",
         price: "90",
-        image: "/images/veg_pulao.jpeg",
+        image: "/images/veg_pulao.jpg",
         veg: true,
         special:false
     },
@@ -73,14 +73,14 @@ const menuItemsSeedData = [
     {
         foodName: "Gobi Manchurian",
         price: "70",
-        image: "/images/gobi_manchurian.jpeg",
+        image: "/images/gobi_manchurian.jpg",
         veg: true,
         special:false
     },
     {
         foodName: "Mixed Vegetable Curry",
         price: "110",
-        image: "/images/mixed_vegetable_curry.jpeg",
+        image: "/images/mixed_vegetable_curry.jpg",
         veg: true,
         special:false
     },
