@@ -52,8 +52,27 @@ const  getNonVegMenuItems = async(req,res)=>{
     }
 }
 
+const  getSpecialMenuItems = async(req,res)=>{
+    try{
+
+        const specialMenuItems = await MenuItems.find({veg:false})
+        res.status(STATUS_CODES.OK).json({
+            message:"SpecialMenuItems found successfully",
+            specialMenuItems
+        })
+    }
+    catch(error)
+    {
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+            message:error.message
+        })
+    }
+}
+
 
 module.exports={
     getAllMenuItems,
     getVegMenuItems,
-    getNonVegMenuItems}
+    getNonVegMenuItems,
+    getSpecialMenuItems
+}

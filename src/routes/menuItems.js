@@ -6,4 +6,5 @@ const controller = require('../controllers/menuItems')
 router.get('/',controller.getAllMenuItems) 
 router.get('/veg',controller.getVegMenuItems)
 router.get('/nonveg',controller.getNonVegMenuItems)
+router.get('/special',controller.getSpecialMenuItems)
 module.exports = router

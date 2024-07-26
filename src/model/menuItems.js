@@ -5,6 +5,7 @@ const menuItemSchema = new mongoose.Schema({
     price: { type: String, required: true },
     image: { type: String, required: true },
     veg: { type: Boolean, required: true },
+    special:Boolean
 });
 
 const MenuItems = mongoose.model('MenuItem', menuItemSchema)
