@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const config = require('./config/mongoose')
+const path = require('path')
+const cors = require('cors')
 
 
 const { STATUS_CODES } = require('./constants')
@@ -65,3 +67,4 @@ app.listen(config.port, config.hostname, () => {
 })
 
 app.use(express.json())
+app.use(cors())
