@@ -37,6 +37,10 @@ db.once('open', () => {
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
 //Health Check Route
 app.get('/', (req, res) => {
     res.status(STATUS_CODES.OK).send('Hello World!\n')
