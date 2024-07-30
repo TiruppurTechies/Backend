@@ -1,20 +1,20 @@
+// server.js
 const express = require('express')
-const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
-
+const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const config = require('./config/mongoose')
-const path = require('path');
+const path = require('path')
+const cors = require('cors')
+
+
+const { STATUS_CODES } = require('./constants')
+
 const menuItems = require('./routes/menuItems')
-const cors = require('cors');
-
-
-
+const userData = require('./routes/userData')
 
 dotenv.config()
-const app = express()
-
-app.use(cors());
+const app = express();
 
 // Configure mongoose connection pool settings
 const mongooseOptions = {
@@ -26,7 +26,7 @@ const mongooseOptions = {
     // TBD: ssl options for security
 }
 
-mongoose.connect(config.mongoDbUri,mongooseOptions)
+mongoose.connect(config.mongoDbUri, mongooseOptions)
 const db = mongoose.connection
 db.on('error', (err) => {
     console.error('Connection error:', err)
@@ -35,24 +35,36 @@ db.once('open', () => {
     console.log('Successfully connected to MongoDB')
 })
 
-
 /** Parse the body of the request */
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
+
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/menuItems',menuItems)
-
-
+//Health Check Route
 app.get('/', (req, res) => {
-    res.status(200).send('Tiruppur Techies!\n')
+    res.status(STATUS_CODES.OK).send('Hello World!\n')
 })
 
 
+/** Routes go here */
+app.use('/menuItems',menuItems)
+app.use('/userData',userData)
+/** Error handling */
+app.use((req, res) => {
+    const error = new Error('URL Not found')
+    res.status(STATUS_CODES.NOT_FOUND).json({
+        message: error.message,
+    })
+})
+
 app.listen(config.port, config.hostname, () => {
-    console.log(`Server running at http://${config.hostname}:${config.port}`)
+    console.log(
+        `Server is listening on http://${config.hostname}:${config.port}`
+    )
 })
 
 app.use(express.json())
+app.use(cors())
