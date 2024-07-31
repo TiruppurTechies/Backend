@@ -69,7 +69,44 @@ const saveUserData = async (req, res) => {
     });
   }
 };
+// POST request handler
+const addToCart = async (req, res) => {
+  try {
+    const { userTag } = req.params; // Extract userTag from route parameters
+    const { foodName, price, qty } = req.body;
+
+    // Validate input
+    if (!userTag || !foodName || !price || !qty) {
+      return res.status(400).json({ message: 'userTag, foodName, price, and qty are required' });
+    }
+
+    // Calculate qtyprice
+    const qtyprice = (qty * parseFloat(price)).toFixed(2);
+
+    // Find the user data for the specific user
+    let user = await UserDataModel.findOne({ userTag });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found for the given userTag' });
+    }
+
+    // Add the new item to the user's cart items
+    user.items.push({ foodName, price, qty, qtyprice });
+
+    // Update totalAmount
+    user.totalAmount = (parseFloat(user.totalAmount) + parseFloat(qtyprice)).toFixed(2);
+
+    // Save the updated user data
+    await user.save();
+
+    res.status(200).json({ message: 'Item added to cart successfully', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+};
+
 
 module.exports = {
-  saveUserData
+  saveUserData,
+  addToCart
 };
