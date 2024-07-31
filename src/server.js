@@ -6,7 +6,8 @@ const mongoose = require('mongoose')
 const config = require('./config/mongoose')
 const path = require('path')
 const cors = require('cors')
-
+const swaggerUi = require('swagger-ui-express')
+const specs = require('./swagger/swaggerOptions')
 
 const { STATUS_CODES } = require('./constants')
 
@@ -48,6 +49,8 @@ app.get('/', (req, res) => {
     res.status(STATUS_CODES.OK).send('Hello World!\n')
 })
 
+/** Swagger Documentation*/
+app.use('/document', swaggerUi.serve, swaggerUi.setup(specs))
 
 /** Routes go here */
 app.use('/menuItems',menuItems)
