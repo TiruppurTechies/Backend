@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const {generateCustomIDs,connectToMongoDB} = require('./utils/customIdGenerator')
-const { PAYMENT_METHOD } = require('../constants')
 
 const userDataSchema = new mongoose.Schema({
     userName:String,
