@@ -105,8 +105,32 @@ const addToCart = async (req, res) => {
   }
 };
 
+const getUserData = async (req, res) => {
+  try {
+    const { mobile, password } = req.query;
+
+    const userData = await UserDataModel.findOne({ mobile, password });
+
+    if (!userData) {
+      return res.status(STATUS_CODES.NOT_FOUND).json({
+        message: "User Account Not found"
+      });
+    }
+
+    return res.status(STATUS_CODES.OK).json({
+      message: "User Account found Successfully",
+      data: userData
+    });
+  } catch (error) {
+    return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+      message: 'Internal Server Error',
+      error
+    });
+  }
+};
 
 module.exports = {
   saveUserData,
-  addToCart
+  addToCart,
+  getUserData
 };

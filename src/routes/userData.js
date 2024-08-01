@@ -36,7 +36,7 @@ const controller = require('../controllers/userData')
  *                 type: string
  *                 description: It should be equal to the password.
  *     responses:
- *       200:
+ *       201:
  *         description: UserData saved successfully
  *       400:
  *         description: Bad request error
@@ -45,6 +45,71 @@ const controller = require('../controllers/userData')
  */
 
 router.post('/', controller.saveUserData)
+
+/**
+ * @swagger
+ * /userData/:
+ *   get:
+ *     summary: Get user data by mobile and password
+ *     tags: [UserData]
+ *     parameters:
+ *       - in: query
+ *         name: mobile
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Mobile number of the user
+ *       - in: query
+ *         name: password
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Password created by the user
+ *     responses:
+ *       200:
+ *         description: User account found successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User Account found Successfully
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     mobile:
+ *                       type: string
+ *                     password:
+ *                       type: string
+ *       404:
+ *         description: User account not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User Account Not found
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Internal Server Error
+ *                 error:
+ *                   type: object
+ */
+router.get('/',controller.getUserData);
+
 /**
  * @swagger
  * /userData/{userTag}/cart:
