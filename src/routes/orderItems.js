@@ -64,4 +64,29 @@ const controller = require('../controllers/orderItems')
 
 router.post('/:userTag',controller.updateOrderItems)
 
+/**
+ * @swagger 
+ * /orderItems/{userTag}/:
+ *   get:
+ *     summary: Get OrderItems by userTag
+ *     description: Get all OrderItems for a specific userTag
+ *     tags: [Orders]
+ *     parameters:
+ *       - name: userTag
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: OrderItems found successfully
+ *       404:
+ *         description: Account not found
+ *       500:
+ *         description: Internal server Error
+ */
+
+
+router.get('/:userTag',controller.getOrderItems)
+
 module.exports = router

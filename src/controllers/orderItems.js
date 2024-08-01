@@ -47,6 +47,33 @@ const updateOrderItems = async (req, res) => {
     }
 };
 
+const getOrderItems= async(req,res)=>{
+    try{
+        const {userTag} = req.params
+
+        const orderData = await OrderModel.find({userTag})
+
+        if(!orderData){
+            res.status(STATUS_CODES.NOT_FOUND).json({
+                message:"Accound Not found"
+            })
+        }
+
+        res.status(STATUS_CODES.OK).json({
+            message:"OrderItems Found Successfully",
+            data:orderData
+        })
+    }
+    catch(error)
+    {
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+            message:"Internal server error",
+            error
+        })
+    }
+}
+
 module.exports = {
-    updateOrderItems
+    updateOrderItems,
+    getOrderItems
 };
