@@ -96,6 +96,8 @@ const addToCart = async (req, res) => {
     // Update totalAmount
     user.totalAmount = (parseFloat(user.totalAmount) + parseFloat(qtyprice)).toFixed(2);
 
+    user.orderedAt = new Date();
+
     // Save the updated user data
     await user.save();
 

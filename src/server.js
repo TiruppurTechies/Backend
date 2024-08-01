@@ -13,6 +13,7 @@ const { STATUS_CODES } = require('./constants')
 
 const menuItems = require('./routes/menuItems')
 const userData = require('./routes/userData')
+const orderedItems = require('./routes/orderItems')
 
 dotenv.config()
 const app = express();
@@ -55,6 +56,8 @@ app.use('/document', swaggerUi.serve, swaggerUi.setup(specs))
 /** Routes go here */
 app.use('/menuItems',menuItems)
 app.use('/userData',userData)
+app.use('/orderItems',orderedItems)
+
 /** Error handling */
 app.use((req, res) => {
     const error = new Error('URL Not found')
