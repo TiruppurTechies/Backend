@@ -131,8 +131,56 @@ const getUserData = async (req, res) => {
   }
 };
 
+// DELETE request handler
+const removeFromCart = async (req, res) => {
+  try {
+    const { userTag } = req.params; // Extract userTag from route parameters
+    const { foodName } = req.body;
+
+    // Validate input
+    if (!userTag || !foodName) {
+      return res.status(400).json({ message: 'userTag and foodName are required' });
+    }
+
+    // Find the user data for the specific user
+    let user = await UserDataModel.findOne({ userTag });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found for the given userTag' });
+    }
+
+    // Find the item to be removed
+    const itemIndex = user.items.findIndex(item => item.foodName === foodName);
+
+    if (itemIndex === -1) {
+      return res.status(404).json({ message: 'Item not found in the cart' });
+    }
+
+    // Calculate the qtyprice of the item to be removed
+    const qtyprice = parseFloat(user.items[itemIndex].qtyprice);
+
+    // Remove the item from the user's cart items
+    user.items.splice(itemIndex, 1);
+
+    // Update totalAmount
+    user.totalAmount = (parseFloat(user.totalAmount) - qtyprice).toFixed(2);
+
+    // Update orderedAt
+    user.orderedAt = new Date();
+
+    // Save the updated user data
+    await user.save();
+
+    res.status(200).json({ message: 'Item removed from cart successfully', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+};
+
+
 module.exports = {
   saveUserData,
   addToCart,
-  getUserData
+  getUserData,
+  removeFromCart
 };
