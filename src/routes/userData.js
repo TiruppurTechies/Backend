@@ -194,6 +194,97 @@ router.get('/',controller.getUserData);
  */
 
 router.post('/:userTag/cart', controller.addToCart);
+/**
+ * @swagger
+ * /userData/cart/{userTag}:
+ *   delete:
+ *     summary: Remove an item from the user's cart
+ *     description: Removes a specified item from the user's cart based on the provided userTag and foodName.
+ *     tags: [UserData]
+ *     parameters:
+ *       - in: path
+ *         name: userTag
+ *         required: true
+ *         description: The tag of the user whose cart item is to be removed
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               foodName:
+ *                 type: string
+ *                 description: Name of the food item 
+ *     responses:
+ *       200:
+ *         description: Item removed from cart successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Item removed from cart successfully
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     userTag:
+ *                       type: string
+ *                     items:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           foodName:
+ *                             type: string
+ *                           qtyprice:
+ *                             type: string
+ *                           qty:
+ *                             type: number
+ *                     totalAmount:
+ *                       type: string
+ *                     orderedAt:
+ *                       type: string
+ *                       format: date-time
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: userTag and foodName are required
+ *       404:
+ *         description: User or item not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User not found for the given userTag
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Server error
+ *                 error:
+ *                   type: object
+ */
+
+router.delete('/cart/:userTag',controller.removeFromCart);
 
 
 module.exports = router
