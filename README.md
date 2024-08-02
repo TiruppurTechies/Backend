@@ -3,7 +3,8 @@
 [ Documentation pending ]
 
 ## Development preparation:
-1. Run ```npm install``` for the dependency packages
+1. Run ```npm install``` for the dependency packages 
+2. Run ```npm install cors``` for install  cors package
 3. Follow the branching and naming strategies specified in the coding guidelines 
 
 ### Link to install of MongoDB
